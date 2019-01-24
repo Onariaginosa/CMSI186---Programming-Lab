@@ -80,7 +80,7 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static long daysInMonth( long month, long year ) {
-      return 33;
+      return (33);
    }
 
   /**
@@ -94,7 +94,7 @@ public class CalendarStuff {
    * @return          boolean which is true if the two dates are exactly the same
    */
    public static boolean dateEquals( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      return true;
+      return (month1==month2 && day1==day2 && year1==year2);
    }
 
   /**

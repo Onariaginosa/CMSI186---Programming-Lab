@@ -80,7 +80,51 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static long daysInMonth( long month, long year ) {
-      return (33);
+     int month_int = (int) month;
+     int new_month = 0;
+     switch (month_int) {
+      case 1:
+          new_month = 31;
+          break;
+      case 2:
+          if (isLeapYear(year) == true){
+            new_month = 29;
+          } else {
+            new_month = 28;
+          }
+          break;
+      case 3:
+          new_month = 31;
+          break;
+      case 4:
+          new_month = 30;
+          break;
+      case 5:
+          new_month = 31;
+          break;
+      case 6:
+          new_month = 30;
+          break;
+      case 7:
+          new_month = 31;
+          break;
+      case 8:
+          new_month = 31;
+          break;
+      case 9:
+          new_month = 30;
+          break;
+      case 10:
+          new_month = 31;
+          break;
+      case 11:
+          new_month = 30;
+          break;
+      case 12:
+          new_month = 31;
+          break;
+      }
+      return new_month;
    }
 
   /**
@@ -108,7 +152,13 @@ public class CalendarStuff {
    * @return          int    -1/0/+1 if first date is less than/equal to/greater than second
    */
    public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      return 0;
+      if(dateEquals(month1, day1, year1, month2, day2, year2) == true){
+        return 0;
+      } else if(year1>year2 || year1 == year2 && month1>month2 || year1 == year2 && month1 == month2 && day1 > day2){
+        return -1;
+      } else {
+        return 1;
+      }
    }
 
   /**
@@ -156,8 +206,8 @@ public class CalendarStuff {
    * @param    year2  long   containing four-digit year
    * @return          long   count of total number of days
    */
-   public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      long dayCount = 0;
+   public static int daysBetween( int month1, int day1, int year1, int month2, int day2, int year2 ) {
+      int dayCount = 0;
       return dayCount;
    }
 

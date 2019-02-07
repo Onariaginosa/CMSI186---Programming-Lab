@@ -18,53 +18,37 @@
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-01-02  B.J. Johnson  Initial writing and release
  */
-public class CountTheDays {
+ public class CountTheDays  {
+     public static void main(String args[]) {
+         try {
+           if(args.length <6 ) {
+             System.out.println("Please pass in the correct arguments. Less than 6 arguments just wont do.");
+             System.exit(-1);
+           }else if (args.length >6) {
+             System.out.println("Please pass in the correct arguments. More than 6 arguments just wont do.");
+             System.exit(-1);
+           }
 
-  /**
-   * Define fields so that the main method can access and get filled by constructor
-   */
+             long month1 = Long.parseLong(args[0]);
+             long day1   = Long.parseLong(args[1]);
+             long year1  = Long.parseLong(args[2]);
+             long month2 = Long.parseLong(args[3]);
+             long day2   = Long.parseLong(args[4]);
+             long year2  = Long.parseLong(args[5]);
+             long days = 0;
 
-    private static long month1 = 0;
-    private static long day1 = 0;
-    private static long year1 = 0;
-    private static long month2 = 0;
-    private static long day2 = 0;
-    private static long year2 = 0;
+             if(!(CalendarStuff.isValidDate(month1, day1, year1)) || !(CalendarStuff.isValidDate(month2, day2, year2))) {
+                 System.out.println("Choose a valid set of dates please.");
+                 System.exit(1);
 
-  /**
-   * The constructor for the class
-   */
-   public CountTheDays() {
-      month1 = Long.parseLong( args[0] );
-      day1 = Long.parseLong( args[1] );
-      year1 = Long.parseLong( args[2] );
-      month2 = Long.parseLong( args[3] );
-      day2 = Long.parseLong( args[4] );
-      year2 = Long.parseLong( args[5] );
-
-   }
-
-
-
-// public swapDateOrder();
-
-  /**
-   * Verify that the correct number of arguments are passed
-   * make a new instance of class
-   * make a new instance of CalendarStuff class
-   * check that the dates are in order, swap them if they arent
-   * call the daysBetween method to calculate the days
-   * output the results to the display
-   */
-   public static void main( String args[] ) {
-      // check for 6 arguments
-      /*CountTheDays ctd = new  CounthTheDays(args);
-      CalendarStuff cs = new CalendarStuff();*/
-   }
-
-   if ( cs.compareDate(month1, day1, year1, month2, day2, year2); == 1 ) {
-      ctd.swapDateOrder();
-   }
-
-
-}
+             }else {
+               days = CalendarStuff.daysBetween(month1,day1,year1,month2,day2,year2);
+               System.out.println("The days between "+month1+"/"+day1+"/"+year1+" and "+month2+"/"+day2+"/"+year2+" is "+days+".");
+               System.exit(0);
+             }
+         }
+         catch(NumberFormatException e) {
+             System.out.println("Error, please input valid dates.");
+         }
+     }
+ }

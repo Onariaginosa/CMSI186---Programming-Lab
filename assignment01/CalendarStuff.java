@@ -19,6 +19,9 @@
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-01-02  B.J. Johnson  Initial writing and release
  */
+import java.util.ArrayList;
+import java.lang.Math;
+
 public class CalendarStuff {
 
   /**
@@ -155,9 +158,9 @@ public class CalendarStuff {
       if(dateEquals(month1, day1, year1, month2, day2, year2) == true){
         return 0;
       } else if(year1>year2 || year1 == year2 && month1>month2 || year1 == year2 && month1 == month2 && day1 > day2){
-        return -1;
-      } else {
         return 1;
+      } else {
+        return -1;
       }
    }
 
@@ -171,7 +174,15 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static boolean isValidDate( long month, long day, long year ) {
-      return true;
+      if (month <= 0 || month >= 13 || day <= 0 || year <= 0){
+        return false;
+      }else if (month != (long) month || day != (long) day || day != (long) day){
+        return false;
+      } else if ((int)day > daysInMonth(month, year)){
+        return false;
+      }else {
+        return true;
+      }
    }
 
   /**
@@ -206,9 +217,25 @@ public class CalendarStuff {
    * @param    year2  long   containing four-digit year
    * @return          long   count of total number of days
    */
-   public static int daysBetween( int month1, int day1, int year1, int month2, int day2, int year2 ) {
-      int dayCount = 0;
-      return dayCount;
+
+   public static long monthInDaysSum( long month, long year){
+     long count = 1;
+     long months = 0;
+     while (count < month ){
+       months += daysInMonth(count, year);
+       count += 1;
+     }
+     return (months);
+   }
+   public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
+     long daysFromMonth1 = monthInDaysSum(month1, year1);
+     long daysFromMonth2 = monthInDaysSum(month2, year2);
+     long adjustedYear1 = year1 - 1;
+     long adjustedYear2 = year2 - 1;
+     long year1InDays = (long) ((adjustedYear1 - adjustedYear1%4) *365.25) + (adjustedYear1%4)*365;
+     long year2InDays = (long) ((adjustedYear2 - adjustedYear2%4) *365.25) + (adjustedYear2%4)*365;
+     long days = daysFromMonth1+year1InDays+( (long) day1) - (daysFromMonth2+year2InDays+ ((long) day2));
+      return (int) Math.abs(days);
    }
 
 }

@@ -16,11 +16,7 @@ public class SoccerSim {
   /**
    *  Class field definintions go here
    */
-   private static final double DEFAULT_X_POSITION = 0;
-   private static final double DEFAULT_Y_POSITION = 0;
-   private static final double DEFAULT_X_SPEED = 60;
-   private static final double DEFAULT_Y_SPEED = 80;
-   private static final double DEFAULT_TIME_SLICE_IN_SECONDS = 60;
+   private static final double DEFAULT_TIME_SLICE_IN_SECONDS = 1;
    private static double timeSlice;
    private static boolean state;
    private static Ball[] balls;
@@ -29,21 +25,16 @@ public class SoccerSim {
 
   /**
    *  Constructor goes here
-   *  @param  xPosition double used in constructor to determine the current x position
-   *  @param  yPosition double used in constructor to determine the current y position
-   *  @param  xSpeed double used in constructor to determine the x component of the velocity
-   *  @param  ySpeed double used in constructor to determine the y component of the velocity
    */
    public SoccerSim() {
      super();
 
    }
+   /**
+    *  Method used to handle initial arguments.
+    *  @param  args[] String array gathered from user input
+    */
    public void handleInitialArguments( String args[] ) {
-     // args[0] specifies the angle for which you are looking
-     //  your simulation will find all the angles in the 12-hour day at which those angles occur
-     // args[1] if present will specify a time slice value; if not present, defaults to 60 seconds
-     // you may want to consider using args[2] for an "angle window"
-
       System.out.println( "\n   Hello world, from the SoccerSim program!!\n\n  This is a collisions simulation with multiple balls on a soccer field of unlimited size." ) ;
       try {
         if( 4 > args.length) {
@@ -93,13 +84,13 @@ public class SoccerSim {
    public boolean collision() {
      if (balls.length >1){
        for (int i = 0; i <balls.length-1;i++){
-         if(((balls[i].xPosition -  pole.xPosition)<0.74166666663) && ((balls[i].yPosition -pole.yPosition)<0.74166666663) ) {
+         if(Math.abs(balls[i].xPosition -  pole.xPosition)<0.74166666663 && Math.abs(balls[i].yPosition -pole.yPosition)<0.74166666663 ) {
            state = true;
            colliders = "Ball "+i+" and the Pole collided.";
            return state;
          }
          for(int j = 1; j < balls.length - 2; j++){
-          if(((balls[i].xPosition -  balls[j].xPosition)< 0.74166666663) && ((balls[i].yPosition -balls[j].yPosition)<0.74166666663) ) {
+          if(Math.abs(balls[i].xPosition -  balls[j].xPosition)< 0.74166666663 && i != j &&Math.abs(balls[i].yPosition -balls[j].yPosition)<0.74166666663 ) {
             state = true;
             colliders = "Ball "+i+" and Ball "+j+" collided.";
             return state;
@@ -107,7 +98,7 @@ public class SoccerSim {
          }
         }
        } else {
-         if(((balls[0].xPosition -  pole.xPosition)<(0.74166666663) && ((balls[0].yPosition -pole.yPosition)<0.74166666663)) ) {
+         if(Math.abs(balls[0].xPosition -  pole.xPosition)<0.74166666663 && Math.abs(balls[0].yPosition -pole.yPosition)<0.74166666663 ) {
            state = true;
            colliders = "Ball 0 and the Pole collided.";
            return state;
@@ -117,7 +108,8 @@ public class SoccerSim {
      }
    /**
     *  Method to report the state of the balls.
-    *  @return boolean called state, which answers the question of whether a ball has collided
+    *  @param  collisionState, which is the collision state
+    *  @param  clocks, which is the clock used as a timer
     */
    public void report(boolean collisionState, Clock clocks) {
      System.out.println("\nTime = "+clocks.toString()+" \n  collision:"+collisionState);
@@ -127,6 +119,7 @@ public class SoccerSim {
    }
    /**
     *  Method to update the speeds
+    *  @param  clocks, which is the clock used as a timer
     */
     public void update(Clock clocks) {
       clocks.tick();
@@ -136,7 +129,7 @@ public class SoccerSim {
       }
     }
      /**
-      *  Method to check whether a ball is still moving
+      *  Method to check whether all balls are still moving or not
       *  @return true or false
       */
       public boolean isStillMovingAll() {
@@ -156,6 +149,7 @@ public class SoccerSim {
   /**
    *  The main program starts here
    *  Test to see if the ball class works somewhat
+   *  @param  args String array gathered from user input
    */
    public static void main(String[] args) {
      SoccerSim soccerSim = new SoccerSim();

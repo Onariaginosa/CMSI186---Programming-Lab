@@ -93,7 +93,6 @@ public class ClockSolver {
         if (Math.abs(clock.getHandAngle() -angle) <= angleWindow || Math.abs(360 - clock.getHandAngle() - angle ) <= angleWindow) {
           System.out.println("  Found target angle at "+clock);
         }
-        clock.tick();
       }
       System.exit( 0 );
    }
